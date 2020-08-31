@@ -1,6 +1,5 @@
 # This is an R script. Any line that starts with # is a comment.
-# Comments are ignored by R when you run the script.
-# Any line that does not start with # will be run.
+# Comments are ignored by R when you run the script..
 
 #### RUNNING CODE ####
 
