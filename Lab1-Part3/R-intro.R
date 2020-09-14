@@ -21,11 +21,17 @@
 
 # Try adding some code below to subtract (-), multiply (*), and divide (/).
 
-# ANSWER NEEDED HERE.
+14 - 9
+
+14 * 9
+
+14 / 9
 
 # Now add some code to create exponentials (^), like 2 raised to the 8th power.
 
-# ANSWER NEEDED HERE.
+2^8
+
+14^9
 
 #### VARIABLES ####
 
@@ -39,12 +45,12 @@ result <- 2 + 2
 
 # Create a variable below called 'message' and assign it the value "Welcome to R!"
 
-# ANSWER NEEDED HERE.
+message <- "Welcome to R!" # double quotes
+message <- 'Welcome to R!' # single quotes - either works
 
 # Now change 'result' to the output of 6 times 7.
 
-# ANSWER NEEDED HERE.
-
+result <- 6 * 7
 
 #### INTERLUDE ####
 
@@ -68,7 +74,7 @@ my.array[2]
 
 # If you wanted to get the value 7 out of the array, how would you do that?
 
-# ANSWER NEEDED HERE.
+my.array[4]
 
 # You can get more than one element out of an array at a time. Use an array to specify
 # the locations that you want to extract.
@@ -78,7 +84,7 @@ my.array[c(1,5)]
 
 # How would you get just the second and fourth elements?
 
-# ANSWER NEEDED HERE.
+my.array[c(2,4)]
 
 # To change the value of an element in an array, just assign it a new value like it is
 # a variable
@@ -107,7 +113,9 @@ sequence <- seq(from=1, to=10)
 # Try generating a sequence below from 0 to 100 in steps of 10. (e.g., 0, 10, 20, ...)
 # Read the documentation on seq or search Stack Overflow to figure out what you need to change.
 
-# ANSWER NEEDED HERE.
+seq(from=0, to=100, by=10) # you can choose to name the arguments or not
+
+seq(0,100,10) # if you don't name them then they must be in the expected order.
 
 # You can use basic mathematical operators with vectors and scalars.
 # (A scalar is a vector with a single element, or, in plain English, just a number).
@@ -127,7 +135,20 @@ array.c <- array.a + array.b
 # Test it out below, and then write a short description of what is happening
 # in a comment.
 
-# ANSWER NEEDED HERE.
+array.d <- c(1,2,3,4)
+array.e <- c(1,2)
+
+array.d + array.e
+
+# in this case, array.e gets repeated twice
+
+array.f <- c(1,2,3,4)
+array.g <- c(1,2,3)
+
+array.f + array.g
+
+# in this case we get a warning, but the first element
+# of array.g is used again to match the length of array.f
 
 #### FINDING HELPFUL FUNCTIONS ####
 
@@ -150,22 +171,22 @@ array.c <- array.a + array.b
 
 # 1) Take the square root of 16
 
-# ANSWER NEEDED HERE.
+sqrt(16)
 
 # 2) Create an array that is 10 repetitions of the number 3
 #    e.g., (3, 3, 3, 3, 3, 3, 3, 3, 3, 3).
 
-# ANSWER NEEDED HERE.
+rep(3,10)
 
 # 3) Add all the numbers in the vector below.
 
 add.me <- c(2,4,6,7,8,5,12) # the answer is 44
 
-# ANSWER NEEDED HERE.
+sum(add.me)
 
 # 4) Generate a random integer between 0 and 100.
 
-# ANSWER NEEDED HERE
+sample(0:100, 1)
 
 # (This might be a good moment to commit and push your code!)
 
@@ -191,7 +212,12 @@ print(message)
 # or "ODD" to indicate if the number is even or odd. (You may want to search for 
 # help about how to determine if a number is even or odd in R.)
 
-# ANSWER NEEDED HERE
+random.number <- sample(1:4,1)
+if(random.number %% 2 == 0){
+  print("EVEN")
+} else {
+  print("ODD")
+}
 
 #### EXTERNAL LIBRARIES ####
 
@@ -253,7 +279,11 @@ multiply.numbers(2,3) # outputs 6
 # Write a function that takes two numbers and returns a random integer that is between
 # the two numbers (including both end numbers as possibilities).
 
-# ANSWER NEEDED HERE.
+random.between <- function(lower, upper){
+  sample(lower:upper, 1)
+}
+
+random.between(4, 10)
 
 #### DATA FRAMES ####
 
@@ -316,7 +346,7 @@ subject.data %>% filter(correct.response == T)
 # Write a filter statement here that keeps only the trials with a response time
 # less than 1,000 in the subject.data data frame.
 
-# ANSWER NEEDED HERE.
+subject.data %>% filter(rt < 1000)
 
 # mutate() is another very useful dplyr function. It allows you to create a new column
 # based on the existing columns. For example, suppose that responses larger than 1,000ms
@@ -334,8 +364,7 @@ subject.data <- subject.data %>% mutate(too.slow = rt > 1000)
 # by adding a column to the data that is called trial.number.odd and has a value of TRUE
 # when the trial number is ODD and FALSE when it is EVEN. Save this column in the data frame.
 
-# ANSWER NEEDED HERE #
-
+subject.data <- subject.data %>% mutate(odd.trial = trial %% 2 == 1)
 
 # Another key set of functions with dplyr is the combination of group_by() and summarize().
 # These functions are useful when you want to create different groups in your data, and then
@@ -349,6 +378,8 @@ summary.data <- subject.data %>% group_by(correct) %>% summarize(mean_rt = mean(
 
 # Write a group_by() + summarize() combo that calculates the proportion of correct
 # trials in ODD and EVEN numbered trials.
+
+subject.data %>% group_by(odd.trial) %>% summarize(prop.correct = sum(correct) / n())
 
 #### LAST PIECE: MISC LAB STUFF #####
 
@@ -382,7 +413,11 @@ sample(c(10), 1)
 # Search the internet for a function that will tell you how many items are in the vector.
 
 better.sample <- function(input.vector, sample.size){
-  
+  if(length(input.vector) == 1){
+    return(rep(input.vector[1], sample.size))
+  } else {
+    return(sample(input.vector, sample.size))
+  }
 }
 
 better.sample(c(10), 1) # should always return 10!
